@@ -5,12 +5,19 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState("");
-  const navigate = useNavigate();  // ✅ Use useNavigate inside a component
+  const [role, setRole] = useState("user"); // Default role is "user"
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    const userData = { name: username, role: "admin" };
+    const userData = { name: username, role };
     login(userData);
-    navigate("/dashboard");  // ✅ Redirect after login
+
+    // Redirect based on role
+    if (role === "admin") {
+      navigate("/admin-dashboard");
+    } else {
+      navigate("/user-dashboard");
+    }
   };
 
   return (
@@ -22,6 +29,10 @@ const Login = () => {
         value={username} 
         onChange={(e) => setUsername(e.target.value)} 
       />
+      <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
       <button onClick={handleLogin}>Login</button>
     </div>
   );
