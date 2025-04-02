@@ -1,13 +1,13 @@
-import { createContext, useContext, useState } from "react";
+const { createContext, useContext, useState } = require("react");
 
-const AuthContext = createContext(null);
+const AuthContext = createContext(null);software 
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+  const login = (user) => {
+    setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
   };
 
   const logout = () => {
@@ -20,6 +20,6 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export const useAuth = () => useContext(AuthContext);
